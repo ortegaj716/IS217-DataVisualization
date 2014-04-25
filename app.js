@@ -9,6 +9,7 @@ var records = new Array();
 var app = express();
 var records = [];
 
+/*
 //All the mongoose stuff
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/facebookDB');
@@ -29,6 +30,7 @@ var facebookSchema = new Schema({
 
 //Our Model
 var DataModel = mongoose.model('DataModel',facebookSchema);
+*/
 
 app.configure(function () {
    app.set('port', process.env.PORT || 3000);
@@ -47,6 +49,7 @@ app.configure('development', function () {
 });
 
 app.get('/', routes.index);
+app.get('/mongo', routes.mongo);
 app.get('/users', user.list);
 
 app.get('/setupDB', function(req,res){
