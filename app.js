@@ -5,30 +5,19 @@ var express = require('express'),
    http = require('http'),
    csv = require('csv'),
    path = require('path');
+   mongoose = require('mongoose');
 var records = new Array();
 var app = express();
 var records = [];
+var Schema = mongoose.Schema;
 
-csv(records)
-   .from.stream(fs.createReadStream(__dirname + '/contract.txt'), {
-   columns: true
-})
-   .on('record', function (row, index) {
-   records.push(row);
-
-   //console.log(row);
-})
-   .on('end', function (count) {
-   var MongoClient = require('mongodb').MongoClient;
-   // Connect to the db
-   MongoClient.connect("mongodb://localhost:27017/exampleDb", function (err, db) {
-      var collection = db.collection('sample')
-      collection.insert(records, function (err, doc) {
-         console.log(doc);
-      });
-   });
-   console.log('Number of lines: ' + count);
+var facebookSchema = new Schema({
+	Country: String,
+	TotalRequests: Number,
+	AccountsRequested: Number,
+	Percent: Number
 });
+
 
 
 app.configure(function () {
@@ -49,6 +38,31 @@ app.configure('development', function () {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+
+app.get('/setupDB', function(req,res){
+	csv(records)
+	   .from.stream(fs.createReadStream(__dirname + '/facebook2.txt'), {
+	   columns: true
+	})
+	   .on('record', function (row, index) {
+	   records.push(row);
+
+	   //console.log(row);
+	})
+	   .on('end', function (count) {
+	   var MongoClient = require('mongodb').MongoClient;
+	   // Connect to the db
+	   MongoClient.connect("mongodb://localhost:27017/facebookDB", function (err, db) {
+	      var collection = db.collection('fbData')
+	      collection.insert(records, function (err, doc) {
+	         console.log(doc);
+	      });
+	   });
+	   console.log('Number of lines: ' + count);
+	res.send('Number of lines: ' + count);
+	});
+	
+});
 
 http.createServer(app).listen(app.get('port'), function () {
    console.log("Express server listening on port " + app.get('port'));
