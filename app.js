@@ -5,12 +5,21 @@ var express = require('express'),
    http = require('http'),
    csv = require('csv'),
    path = require('path');
-   mongoose = require('mongoose');
 var records = new Array();
 var app = express();
 var records = [];
+
+//All the mongoose stuff
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/facebookDB');
+
+//Error?
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+
 var Schema = mongoose.Schema;
 
+//Our Schema
 var facebookSchema = new Schema({
 	Country: String,
 	TotalRequests: Number,
@@ -18,7 +27,8 @@ var facebookSchema = new Schema({
 	Percent: Number
 });
 
-
+//Our Model
+var DataModel = mongoose.model('DataModel',facebookSchema);
 
 app.configure(function () {
    app.set('port', process.env.PORT || 3000);
@@ -52,7 +62,7 @@ app.get('/setupDB', function(req,res){
 	   .on('end', function (count) {
 	   var MongoClient = require('mongodb').MongoClient;
 	   // Connect to the db
-	   MongoClient.connect("mongodb://localhost:27017/facebookDB", function (err, db) {
+	   MongoClient.connect("mongodb://localhost/facebookDB", function (err, db) {
 	      var collection = db.collection('fbData')
 	      collection.insert(records, function (err, doc) {
 	         console.log(doc);
