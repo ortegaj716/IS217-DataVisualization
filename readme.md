@@ -1,10 +1,9 @@
 <html>
-  <h1>Hello World</h1>
+  <h1>IS217 Data Visualization</h1>
+	<p style="font-style:italic;">By Joshua Ortega and Bindya Rana</p>
+	<br>
+	<br>
+	Data visualization assignment using Node, NodeCSV, Express, jQuery, MongoDB, and Mongoose.
+	<br>
 </html>
 
-requires NodeCSV:
-https://github.com/wdavidw/node-csv-parser
-
-requires MongoDB:
-
-http://mongodb.github.com/node-mongodb-native/
