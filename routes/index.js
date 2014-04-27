@@ -34,9 +34,18 @@ exports.mongo = function(req, res){
 		var DataModel = mongoose.model('DataModel',facebookSchema,'fbData');
 
 		//Let's try printing something...
+		/*
 		DataModel.find(function(err, results){
 			if(err) return console.error(err);
 			console.log(results);
+			res.send(results);
+		});
+		*/
+
+		//Using lean?
+		DataModel.find().lean().exec(function (err, results) {
+			console.log(results);
+			res.send(results);
 		});
 
 	});
