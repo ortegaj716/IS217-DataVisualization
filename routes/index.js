@@ -40,7 +40,6 @@ exports.mongo = function(req, res){
 	
 		//Using lean?
 		DataModel.find().lean().exec(function (err, results) {
-			console.log(results);
 			res.send(results);
 		});
 

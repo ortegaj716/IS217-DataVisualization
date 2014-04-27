@@ -32,7 +32,7 @@ app.get('/users', user.list);
 
 app.get('/setupDB', function(req,res){
 	csv(records)
-	   .from.stream(fs.createReadStream(__dirname + '/facebook2.txt'), {
+	   .from.stream(fs.createReadStream(__dirname + '/facebook3.txt'), {
 	   columns: true
 	})
 	   .on('record', function (row, index) {
