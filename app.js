@@ -9,28 +9,6 @@ var records = new Array();
 var app = express();
 var records = [];
 
-/*
-//All the mongoose stuff
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/facebookDB');
-
-//Error?
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-
-var Schema = mongoose.Schema;
-
-//Our Schema
-var facebookSchema = new Schema({
-	Country: String,
-	TotalRequests: Number,
-	AccountsRequested: Number,
-	Percent: Number
-});
-
-//Our Model
-var DataModel = mongoose.model('DataModel',facebookSchema);
-*/
 
 app.configure(function () {
    app.set('port', process.env.PORT || 3000);
