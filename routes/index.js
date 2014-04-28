@@ -19,14 +19,15 @@ console.log("Connected!");
 var Schema = mongoose.Schema;
 var facebookSchema = new Schema({
 	
-	Country: String,
-	TotalRequests: Number,
-	AccountsRequested: Number,
-	Percent: Number
+	Country: {
+		TotalRequests: Number,
+		AccountsRequested: Number,
+		Percent: Number
+	}
 });
 	
 //Our Model
-var DataModel = mongoose.model('DataModel',facebookSchema,'fbData');
+var DataModel = mongoose.model('DataModel',facebookSchema,'fb');
 
 
 //Exports!

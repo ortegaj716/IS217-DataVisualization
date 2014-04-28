@@ -47,19 +47,19 @@ app.get('/setupDB', function(req,res){
 	   console.log(insert);
 
 	   //console.log(row['0']);
-	   records.push(row);
+	   records.push(insert);
 	   //console.log(row);
 	})
 	   .on('end', function (count) {
 	   var MongoClient = require('mongodb').MongoClient;
 	   // Connect to the db
 	   MongoClient.connect("mongodb://localhost/facebookDB", function (err, db) {
-	      var collection = db.collection('fbData')
-	/*
+	      var collection = db.collection('fb')
+	
 	      collection.insert(records, function (err, doc) {
 	         console.log(doc);
 	      });
-	*/
+	
 	   });
 	   console.log('Number of lines: ' + count);
 	res.send('Number of lines: ' + count);

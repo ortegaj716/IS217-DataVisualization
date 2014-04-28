@@ -1,4 +1,8 @@
 //Fun with jQuery!
+
+var mapData = {};
+var dm = {};
+
 $(document).ready(function(){
 	$("p").click(function(){
 		$(this).hide();
@@ -18,16 +22,30 @@ $(document).ready(function(){
 	*/
 
 		console.log("OK");
+
 		console.log(data);
+
+		dm = {
+			element: document.getElementById('container'),
+	
+			fills: {
+				defaultFill: 'rgb(240,240,240)'
+			},
+	
+			data: data,
+	
+			geographyConfig: {
+	
+				popupTemplate: function(geo, data) {
+					return '<div class="hoverinfo"><strong>' + geo.properties.name + '</strong></div>';
+				}
+				
+			}
+	
+		};
+
+		$("#container").datamaps(dm);
+
 	});
 
-	var mapData = {
-		element: document.getElementById('container'),
-		fills: {
-			defaultFill: 'rgb(240,240,240)'
-		}
-
-	};
-
-	$("#container").datamaps(mapData);
 });
