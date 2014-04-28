@@ -32,12 +32,22 @@ app.get('/users', user.list);
 
 app.get('/setupDB', function(req,res){
 	csv(records)
-	   .from.stream(fs.createReadStream(__dirname + '/facebook3.txt'), {
+	   .from.stream(fs.createReadStream(__dirname + '/facebook_converted.txt'), {
 	   columns: true
 	})
 	   .on('record', function (row, index) {
-	   records.push(row);
+	   //console.log(row.Country);
+	   var insert = {};
+	   insert[row.Country] = {
+		Percent : row.Percent,
+		TotalRequests : row.TotalRequests,
+		AccountsRequested : row.AccountsRequested
+	   }
 
+	   console.log(insert);
+
+	   //console.log(row['0']);
+	   records.push(row);
 	   //console.log(row);
 	})
 	   .on('end', function (count) {
@@ -45,9 +55,11 @@ app.get('/setupDB', function(req,res){
 	   // Connect to the db
 	   MongoClient.connect("mongodb://localhost/facebookDB", function (err, db) {
 	      var collection = db.collection('fbData')
+	/*
 	      collection.insert(records, function (err, doc) {
 	         console.log(doc);
 	      });
+	*/
 	   });
 	   console.log('Number of lines: ' + count);
 	res.send('Number of lines: ' + count);

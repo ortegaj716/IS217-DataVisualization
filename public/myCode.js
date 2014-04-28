@@ -21,5 +21,13 @@ $(document).ready(function(){
 		console.log(data);
 	});
 
-	$("#container").datamaps({element: document.getElementById('container')});
+	var mapData = {
+		element: document.getElementById('container'),
+		fills: {
+			defaultFill: 'rgb(240,240,240)'
+		}
+
+	};
+
+	$("#container").datamaps(mapData);
 });
