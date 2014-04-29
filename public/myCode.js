@@ -4,9 +4,6 @@ var mapData = {};
 var dm = {};
 
 $(document).ready(function(){
-	$("p").click(function(){
-		$(this).hide();
-	});
 
 	$.getJSON("http://localhost:3000/mongo", function(data) {
 	/*
@@ -21,23 +18,39 @@ $(document).ready(function(){
 		}).appendTo("body");
 	*/
 
+		var mapData = data;
+
 		console.log("OK");
 
-		console.log(data);
+		console.log(mapData[0]);
 
 		dm = {
 			element: document.getElementById('container'),
 	
 			fills: {
-				defaultFill: 'rgb(240,240,240)'
+				defaultFill: 'rgb(240,240,240)',
+				'low': 'rgb(199,233,255)',
+				'some': 'rgb(137,207,250)',
+				'high': 'rgb(0,156,255)',
+				'veryHigh': 'rgb(0,112,181)'
 			},
 	
-			data: data,
+			data: mapData[0],
 	
 			geographyConfig: {
 	
 				popupTemplate: function(geo, data) {
-					return '<div class="hoverinfo"><strong>' + geo.properties.name + '</strong></div>';
+					//console.log(data);
+					//console.log(mapData);
+					
+					if(data == null)
+						return '<div class="hoverinfo"><strong>' + geo.properties.name + '</strong></div>';
+
+					//Wow look at this mess
+
+					return '<div class="hoverinfo"><strong>' + geo.properties.name + '</strong><ul><li>Total Requests: ' + data.TotalRequests + '</li><li>User Accounts Requested: ' + data.AccountsRequested + '</li><li>Percent of Requests Fulfilled: ' + data.Percent + '</li></ul></div>';
+
+					//return '<div class="hoverinfo"><strong>' + geo.properties.name + ' ' + ' ' + data.Percent + '</strong></div>';
 				}
 				
 			}

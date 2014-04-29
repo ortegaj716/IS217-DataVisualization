@@ -31,30 +31,41 @@ app.get('/mongo', routes.mongo);
 app.get('/users', user.list);
 
 app.get('/setupDB', function(req,res){
+	var insert = {};
+
 	csv(records)
 	   .from.stream(fs.createReadStream(__dirname + '/facebook_converted.txt'), {
 	   columns: true
 	})
-	   .on('record', function (row, index) {
+	.on('record', function (row, index) {
 	   //console.log(row.Country);
-	   var insert = {};
-	   insert[row.Country] = {
-		Percent : row.Percent,
-		TotalRequests : row.TotalRequests,
-		AccountsRequested : row.AccountsRequested
-	   }
+		var color = {};
+		if(row.Percent >= 0)
+			color = 'low';
+		if(row.Percent >= 25)
+			color = 'some';
+		if(row.Percent >= 50)
+			color = 'high';
+		if(row.Percent >= 75)
+			color = 'veryHigh';
+	   	insert[row.Country] = {
+			Percent : row.Percent,
+			TotalRequests : row.TotalRequests,
+			AccountsRequested : row.AccountsRequested,
+			fillKey: color
+	   	}
 
-	   console.log(insert);
+	   	console.log(insert[row.Country]);
 
-	   //console.log(row['0']);
-	   records.push(insert);
-	   //console.log(row);
+	   	//console.log(row);
 	})
+
 	   .on('end', function (count) {
 	   var MongoClient = require('mongodb').MongoClient;
 	   // Connect to the db
 	   MongoClient.connect("mongodb://localhost/facebookDB", function (err, db) {
-	      var collection = db.collection('fb')
+	      var collection = db.collection('fb3')
+		records.push(insert);
 	
 	      collection.insert(records, function (err, doc) {
 	         console.log(doc);

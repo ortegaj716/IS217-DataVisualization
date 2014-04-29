@@ -18,8 +18,7 @@ console.log("Connected!");
 //Our Schema
 var Schema = mongoose.Schema;
 var facebookSchema = new Schema({
-	
-	Country: {
+	Country:{
 		TotalRequests: Number,
 		AccountsRequested: Number,
 		Percent: Number
@@ -27,7 +26,7 @@ var facebookSchema = new Schema({
 });
 	
 //Our Model
-var DataModel = mongoose.model('DataModel',facebookSchema,'fb');
+var DataModel = mongoose.model('DataModel',facebookSchema,'fb3');
 
 
 //Exports!
@@ -39,7 +38,7 @@ exports.index = function(req, res){
 exports.mongo = function(req, res){
 	
 	
-		//Using lean?
+		//Using lean
 		DataModel.find().lean().exec(function (err, results) {
 			res.send(results);
 		});

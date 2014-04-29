@@ -14,3 +14,18 @@ a {
 	width:1000px;
 	height:600px;
 }
+
+h1{
+	font-size:200%;
+}
+
+#info{
+	margin-left:auto;
+	margin-right:auto;
+	width:1000px;
+	font-size:150%;
+}
+
+#footer{
+	color:#7A7A7A;
+}
