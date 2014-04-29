@@ -22,7 +22,7 @@ $(document).ready(function(){
 
 		console.log("OK");
 
-		console.log(mapData[0]);
+		console.log(mapData);
 
 		dm = {
 			element: document.getElementById('container'),
