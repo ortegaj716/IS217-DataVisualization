@@ -34,6 +34,11 @@ exports.index = function(req, res){
   res.render('index', { title: 'Express' });
 };
 
+//Bar graph
+exports.bar = function(req, res){
+  res.render('bar', { title: 'Express' });
+}
+
 //This will be called by Ajax
 exports.mongo = function(req, res){
 	
