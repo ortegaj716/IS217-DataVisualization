@@ -11,7 +11,7 @@ var maxBarWidth = 420; // width of the bar with the max value
  
 // accessor functions 
 var barLabel = function(d) { return d['Country']; };
-var barValue = function(d) { return parseFloat(d['TotalRequests']); };
+var barValue = function(d) { return parseFloat(d['Percent']); };
  
 // sorting
 var sortedData = data.sort(function(a, b) {
