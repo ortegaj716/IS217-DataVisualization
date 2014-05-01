@@ -2,8 +2,28 @@
 //var data = d3.csv.parse(d3.select('facebookDB.csv').text());
 $(document).ready(function(){
 
-	$.getJSON("http://localhost:3000/mongo", function(data) {
-	
+	$.getJSON("http://localhost:3000/mongo", function(mapData) {
+
+		var data = [];
+
+		//console.log(mapData[0]);
+
+		for(var key in mapData[0]){
+			if(mapData[0].hasOwnProperty(key)){
+				//console.log(key);
+				//console.log(mapData[0][key]['Percent']);
+				
+				var myPush = [];
+				myPush.push(key);
+				myPush.push(mapData[0][key]['Percent']);
+				
+				if(key !== "_id")
+					data.push(myPush);
+				
+			}
+		}
+		
+		console.log(data);	
 		var valueLabelWidth = 40; // space reserved for value labels (right)
 		var barHeight = 20; // height of one bar
 		var barLabelWidth = 100; // space reserved for bar labels
@@ -13,12 +33,12 @@ $(document).ready(function(){
 		var maxBarWidth = 420; // width of the bar with the max value
  
 		// accessor functions 
-		var barLabel = function(d) { return d['Country']; };
-		var barValue = function(d) { return parseFloat(d['Percent']); };
+		var barLabel = function(d) { return d[0]; };
+		var barValue = function(d) { return parseFloat(d[1]); };
 		 
 		// sorting
 		var sortedData = data.sort(function(a, b) {
-		 return d3.ascending(barLabel(a), barLabel(b));
+		 return d3.descending(barValue(a), barValue(b));
 		}); 
 		
 		// scales
@@ -80,5 +100,5 @@ $(document).ready(function(){
 		  .attr("y2", yScale.rangeExtent()[1] + gridChartOffset)
 		  .style("stroke", "#000");
 
-	}
+	});
 });
